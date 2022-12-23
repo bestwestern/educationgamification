@@ -24,6 +24,7 @@ export default (props) => {
     });
     location.href = url.substring(0, url.length - 1);
     // setTimeout(() => {
+
     //   location.reload();
     // }, 50);
   };
