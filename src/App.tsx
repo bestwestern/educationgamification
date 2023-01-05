@@ -54,7 +54,7 @@ export default () => {
           );
         })}
       </map>
-      {dynamicImages.map((di) => {
+      {dynamicImages.map((di, index) => {
         const { answersRequired, fileName, position } = di;
         let showImage = true;
         const hide = Object.keys(answersRequired).filter((id) => {
@@ -62,7 +62,11 @@ export default () => {
         }).length;
         if (hide) return null;
         return (
-          <img src={g} style={{ position: "absolute", ...position }}></img>
+          <img
+            key={fileName + index}
+            src={fileName}
+            style={{ position: "absolute", ...position }}
+          ></img>
         );
       })}
     </div>
