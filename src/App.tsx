@@ -23,7 +23,6 @@ export default () => {
       false
     );
   }, []);
-  console.log(route);
   const { tasks, rootImageFileName, dynamicImages } = config;
   const taskClick = (e, id) => {
     e.preventDefault();
