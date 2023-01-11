@@ -10,7 +10,10 @@ const config = {
   },
   dynamicImages: [
     {
-      answersRequired: { a0: 4, a1: 6 },
+      answersRequired: {
+        a0: { equalTo: 4 },
+        a1: { lessThanOrEqualTo: 6, greaterThanOrEqualTo: 4 },
+      },
       fileName: "icon.png",
       position: { left: "300px", top: "200px" },
     },

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 export default (props) => {
-  const { currentTaskId, config, route } = props;
+  const { currentTaskId, config, route, setCurrentTaskId } = props;
   console.log(props);
   useEffect(() => {}, []);
   const [answers, setAnswers] = useState([]);
@@ -13,6 +13,9 @@ export default (props) => {
     newAnswers[index] = newAnswer;
     setAnswers(newAnswers);
   };
+  const closeClick = () => {
+    setCurrentTaskId(null);
+  };
   const answerClick = (e) => {
     const r = { ...route };
     answers.forEach((answer, index) => {
@@ -23,49 +26,75 @@ export default (props) => {
       url += id + "=" + answer + "&";
     });
     location.href = url.substring(0, url.length - 1);
-    // setTimeout(() => {
-
-    //   location.reload();
-    // }, 50);
+    setTimeout(() => {
+      location.reload();
+    }, 50);
   };
   const answerCount = answers.filter(
     (answer) => answer && answer.length
   ).length;
   console.log(route);
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: "0px",
-        right: "0px",
-        bottom: "0px",
-        left: "0px",
-      }}
-    >
-      {image && <img src={"/" + image}></img>}
-      <br />
-      <br />
-      <br />
-      {questions.map((question, index) => {
-        const { text } = question;
-        return (
-          <div key={index + text}>
-            <label htmlFor={index.toString()}>{text}</label>
-            <input
-              type="text"
-              id={index.toString()}
-              onInput={(e) => answerChange(e, index)}
-            ></input>
-          </div>
-        );
-      })}
-      {answerCount === questions.length ? (
-        <button type="button" onClick={answerClick}>
-          Svar
-        </button>
-      ) : (
-        <span>svar på alle spørgsmål</span>
-      )}
+    <div className="flex justify-center">
+      <div className="sm:w-1 md:w-1/2 ">
+        <div className="relative">
+          <button
+            type="button"
+            onClick={closeClick}
+            className=" bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 absolute right-0"
+          >
+            <svg
+              className="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          {image && <img className="pt-10" src={"/" + image}></img>}
+        </div>
+        <br />
+        <br />
+        <br />
+        {questions.map((question, index) => {
+          const { text } = question;
+
+          return (
+            <div key={index + text}>
+              <div className="mb-6">
+                <label
+                  htmlFor={"q" + index}
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  {text}
+                </label>
+                <input
+                  autoFocus={!index}
+                  type="text"
+                  id={"q" + index}
+                  onInput={(e) => answerChange(e, index)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+            </div>
+          );
+        })}
+        {answerCount === questions.length ? (
+          <button type="button" onClick={answerClick}>
+            Svar
+          </button>
+        ) : (
+          <span>svar på alle spørgsmål</span>
+        )}
+      </div>
     </div>
   );
 };

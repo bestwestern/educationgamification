@@ -28,13 +28,19 @@ export default () => {
     e.preventDefault();
     setCurrentTaskId(id);
   };
+  console.log(currentTaskId);
   if (currentTaskId)
     return (
-      <Task currentTaskId={currentTaskId} route={route} config={config}></Task>
+      <Task
+        currentTaskId={currentTaskId}
+        route={route}
+        config={config}
+        setCurrentTaskId={setCurrentTaskId}
+      ></Task>
     );
   return (
     <div>
-      <h1>Hello escaperoom</h1>
+      <h1>Hello edsscaperoom</h1>
 
       <img
         useMap="#workmap"
@@ -55,17 +61,26 @@ export default () => {
       </map>
       {dynamicImages.map((di, index) => {
         const { answersRequired, fileName, position } = di;
-        let showImage = true;
-        const hide = Object.keys(answersRequired).filter((id) => {
-          return route[id] !== answersRequired[id].toString();
-        }).length;
-        if (hide) return null;
+        const hide = Object.keys(answersRequired).find((id) => {
+          console.log({ id, answersRequired, route });
+          if (answersRequired[id].equalTo !== undefined)
+            if (route[id] !== answersRequired[id].equalTo.toString())
+              return true;
+          if (answersRequired[id].lessThanOrEqualTo !== undefined)
+            if (Number(route[id]) > answersRequired[id].lessThanOrEqualTo)
+              return true;
+          if (answersRequired[id].greaterThanOrEqualTo !== undefined)
+            if (Number(route[id]) < answersRequired[id].greaterThanOrEqualTo)
+              return true;
+        });
         return (
-          <img
-            key={fileName + index}
-            src={fileName}
-            style={{ position: "absolute", ...position }}
-          ></img>
+          !hide && (
+            <img
+              key={fileName + index}
+              src={fileName}
+              style={{ position: "absolute", ...position }}
+            ></img>
+          )
         );
       })}
     </div>
