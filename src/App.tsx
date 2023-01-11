@@ -40,7 +40,7 @@ export default () => {
     );
   return (
     <div>
-      <h1>Hello edsscaperoom</h1>
+      <h1>Hello develop</h1>
 
       <img
         useMap="#workmap"
