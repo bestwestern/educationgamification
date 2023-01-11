@@ -5,7 +5,7 @@ export default (props) => {
   useEffect(() => {}, []);
   const [answers, setAnswers] = useState([]);
   const currentTask = config.tasks[currentTaskId];
-  const { image, questions } = currentTask;
+  const { image, questions, secondImage } = currentTask;
   const answerChange = (e, index) => {
     console.log("cha");
     const newAnswer = e.target.value;
@@ -21,6 +21,7 @@ export default (props) => {
     answers.forEach((answer, index) => {
       r[currentTaskId + index] = answer;
     });
+
     let url = location.origin + "/?";
     Object.entries(r).forEach(([id, answer]) => {
       url += id + "=" + answer + "&";
@@ -34,6 +35,53 @@ export default (props) => {
     (answer) => answer && answer.length
   ).length;
   console.log(route);
+  let secondImageComponent = null;
+  let questionCount = questions.length;
+  if (secondImage) {
+    const { answersRequired, fileName, secondaryQuestions } = secondImage;
+    console.log(answersRequired);
+    const hide = answersRequired.find((req, index) => {
+      console.log(index);
+      console.log(answersRequired[index]);
+      const answer = Number(answers[index]);
+      if (isNaN(answer)) return true;
+      if (answersRequired[index].equalTo !== undefined)
+        if (answers[index] !== answersRequired[index].equalTo.toString())
+          return true;
+      if (answersRequired[index].lessThanOrEqualTo !== undefined)
+        if (answer > answersRequired[index].lessThanOrEqualTo) return true;
+      if (answersRequired[index].greaterThanOrEqualTo !== undefined)
+        if (answer < answersRequired[index].greaterThanOrEqualTo) return true;
+    });
+    if (!hide)
+      secondImageComponent = (
+        <>
+          {fileName && <img className="pt-10" src={"/" + fileName}></img>}
+          {secondaryQuestions.map((question, index) => {
+            const { text } = question;
+
+            return (
+              <div key={index + text}>
+                <div className="mb-6">
+                  <label
+                    htmlFor={"q" + index}
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    {text}
+                  </label>
+                  <input
+                    type="text"
+                    id={"q" + index}
+                    onInput={(e) => answerChange(e, index + questions.length)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </>
+      );
+  }
   return (
     <div className="flex justify-center">
       <div className="sm:w-1 md:w-1/2 ">
@@ -87,13 +135,13 @@ export default (props) => {
             </div>
           );
         })}
-        {answerCount === questions.length ? (
+        {secondImageComponent}
+        {answerCount ===
+        (secondImage?.secondaryQuestions || []).length + questions.length ? (
           <button type="button" onClick={answerClick}>
             Svar
           </button>
-        ) : (
-          <span>svar på alle spørgsmål</span>
-        )}
+        ) : null}
       </div>
     </div>
   );

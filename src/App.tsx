@@ -6,7 +6,7 @@ export default () => {
   let paramString = window.location.search.split("?")[1];
   let queryString = new URLSearchParams(paramString);
   const [route, setRoute] = useState(Object.fromEntries(queryString.entries()));
-  const [currentTaskId, setCurrentTaskId] = useState();
+  const [currentTaskId, setCurrentTaskId] = useState("b");
   useEffect(() => {
     window.addEventListener(
       "popstate",
@@ -28,7 +28,6 @@ export default () => {
     e.preventDefault();
     setCurrentTaskId(id);
   };
-  console.log(currentTaskId);
   if (currentTaskId)
     return (
       <Task
@@ -41,7 +40,6 @@ export default () => {
   return (
     <div>
       <h1>Hello develop</h1>
-
       <img
         useMap="#workmap"
         style={{ position: "absolute", left: 0, top: "50px", width: "1000px" }}
@@ -51,6 +49,7 @@ export default () => {
         {Object.entries(tasks).map(([id, { coords }]) => {
           return (
             <area
+              href="#"
               key={id}
               shape="rect"
               coords={coords}
@@ -62,7 +61,6 @@ export default () => {
       {dynamicImages.map((di, index) => {
         const { answersRequired, fileName, position } = di;
         const hide = Object.keys(answersRequired).find((id) => {
-          console.log({ id, answersRequired, route });
           if (answersRequired[id].equalTo !== undefined)
             if (route[id] !== answersRequired[id].equalTo.toString())
               return true;
