@@ -6,7 +6,7 @@ export default () => {
   let paramString = window.location.search.split("?")[1];
   let queryString = new URLSearchParams(paramString);
   const [route, setRoute] = useState(Object.fromEntries(queryString.entries()));
-  const [currentTaskId, setCurrentTaskId] = useState("b");
+  const [currentTaskId, setCurrentTaskId] = useState();
   useEffect(() => {
     window.addEventListener(
       "popstate",
@@ -39,7 +39,7 @@ export default () => {
     );
   return (
     <div>
-      <h1>Hello develop</h1>
+      <h1>Overskrift?</h1>
       <img
         useMap="#workmap"
         style={{ position: "absolute", left: 0, top: "50px", width: "1000px" }}

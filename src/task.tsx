@@ -126,6 +126,7 @@ export default (props) => {
                 </label>
                 <input
                   autoFocus={!index}
+                  disabled={!!secondImageComponent}
                   type="text"
                   id={"q" + index}
                   onInput={(e) => answerChange(e, index)}
