@@ -5,7 +5,7 @@ export default (props) => {
   useEffect(() => {}, []);
   const [answers, setAnswers] = useState([]);
   const currentTask = config.tasks[currentTaskId];
-  const { image, questions, secondImage } = currentTask;
+  const { image, questions, secondImage, ht } = currentTask;
   const answerChange = (e, index) => {
     console.log("cha");
     const newAnswer = e.target.value;
@@ -114,9 +114,10 @@ export default (props) => {
         <br />
         {questions.map((question, index) => {
           const { text } = question;
-
+          console.log({ ht });
           return (
             <div key={index + text}>
+              <div dangerouslySetInnerHTML={{ __html: ht }}></div>
               <div className="mb-6">
                 <label
                   htmlFor={"q" + index}
@@ -140,7 +141,7 @@ export default (props) => {
         {answerCount ===
         (secondImage?.secondaryQuestions || []).length + questions.length ? (
           <button type="button" onClick={answerClick}>
-            Svar
+            SLET DENNE - LUK AUTOMATISK HVIS SVARENE ER ACCEPTABLE
           </button>
         ) : null}
       </div>

@@ -5,11 +5,13 @@ const config = {
       image: "a.jpg",
       questions: [{ text: "2+2" }, { text: "2+4" }],
       coords: "0,400,400,700",
-
+      ht: "Y=x<sup>2",
       acceptableAnswers: [
+        //CLOSE WHEN..
         { equalTo: 4 },
         { lessThanOrEqualTo: 6, greaterThanOrEqualTo: 4 },
       ],
+      helpText: "jkl",
     },
     b: {
       image: "b.jpg",
@@ -26,6 +28,7 @@ const config = {
       acceptableAnswers: [
         { equalTo: 4 },
         { lessThanOrEqualTo: 6, greaterThanOrEqualTo: 4 },
+        { in: [1, 2] },
       ],
     },
   },
