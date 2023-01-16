@@ -1,17 +1,29 @@
 import { useState, useEffect } from "react";
+import { checkValue } from "./utils";
 export default (props) => {
   const { currentTaskId, config, route, setCurrentTaskId } = props;
   console.log(props);
+  const not_num_period = new RegExp("[^0-9.]");
   useEffect(() => {}, []);
   const [answers, setAnswers] = useState([]);
   const currentTask = config.tasks[currentTaskId];
-  const { image, questions, secondImage, ht } = currentTask;
+  const { image, questions, secondImage, acceptableAnswers } = currentTask;
   const answerChange = (e, index) => {
-    console.log("cha");
-    const newAnswer = e.target.value;
-    const newAnswers = [...answers];
+    const newAnswer = e.target.value
+      .replace(",", ".")
+      .replace(not_num_period, "");
+    let newAnswers = [...answers];
     newAnswers[index] = newAnswer;
-    setAnswers(newAnswers);
+
+    const allAnsweredOk = !acceptableAnswers.find(
+      (requirement, requirementIndex) => {
+        const answer = newAnswers[requirementIndex];
+        if (answer === undefined) return true;
+        return !checkValue(answer, requirement);
+      }
+    );
+    if (allAnsweredOk) answerClick();
+    else setAnswers(newAnswers);
   };
   const closeClick = () => {
     setCurrentTaskId(null);
@@ -36,22 +48,13 @@ export default (props) => {
   ).length;
   console.log(route);
   let secondImageComponent = null;
-  let questionCount = questions.length;
   if (secondImage) {
     const { answersRequired, fileName, secondaryQuestions } = secondImage;
-    console.log(answersRequired);
-    const hide = answersRequired.find((req, index) => {
-      console.log(index);
-      console.log(answersRequired[index]);
+    const hide = answersRequired.find((requirement, index) => {
       const answer = Number(answers[index]);
+      const valueOk = checkValue(answer, requirement);
       if (isNaN(answer)) return true;
-      if (answersRequired[index].equalTo !== undefined)
-        if (answers[index] !== answersRequired[index].equalTo.toString())
-          return true;
-      if (answersRequired[index].lessThanOrEqualTo !== undefined)
-        if (answer > answersRequired[index].lessThanOrEqualTo) return true;
-      if (answersRequired[index].greaterThanOrEqualTo !== undefined)
-        if (answer < answersRequired[index].greaterThanOrEqualTo) return true;
+      return !valueOk;
     });
     if (!hide)
       secondImageComponent = (
@@ -89,8 +92,9 @@ export default (props) => {
           <button
             type="button"
             onClick={closeClick}
-            className=" bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 absolute right-0"
+            className=" bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 absolute right-0 border-2"
           >
+            <span>Annuller</span>
             <svg
               className="h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -113,11 +117,10 @@ export default (props) => {
         <br />
         <br />
         {questions.map((question, index) => {
-          const { text } = question;
-          console.log({ ht });
+          const { text, html } = question;
           return (
-            <div key={index + text}>
-              <div dangerouslySetInnerHTML={{ __html: ht }}></div>
+            <div key={index}>
+              <div dangerouslySetInnerHTML={{ __html: html }}></div>
               <div className="mb-6">
                 <label
                   htmlFor={"q" + index}
@@ -129,6 +132,7 @@ export default (props) => {
                   autoFocus={!index}
                   disabled={!!secondImageComponent}
                   type="text"
+                  value={answers[index] === undefined ? "" : answers[index]}
                   id={"q" + index}
                   onInput={(e) => answerChange(e, index)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -138,12 +142,6 @@ export default (props) => {
           );
         })}
         {secondImageComponent}
-        {answerCount ===
-        (secondImage?.secondaryQuestions || []).length + questions.length ? (
-          <button type="button" onClick={answerClick}>
-            SLET DENNE - LUK AUTOMATISK HVIS SVARENE ER ACCEPTABLE
-          </button>
-        ) : null}
       </div>
     </div>
   );
