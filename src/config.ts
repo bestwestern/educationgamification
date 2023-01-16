@@ -11,8 +11,8 @@ const config = {
       ht: "Y=x<sup>2",
       acceptableAnswers: [
         //CLOSE WHEN..
-        { equalTo: 4 },
-        { lessThanOrEqualTo: 6, greaterThanOrEqualTo: 4 },
+        { equalTo: 0.6 },
+        { equalTo: 1.1 },
       ],
       helpText: "jkl",
     },
@@ -38,8 +38,8 @@ const config = {
   dynamicImages: [
     {
       answersRequired: {
-        a0: { equalTo: 4 },
-        a1: { lessThanOrEqualTo: 6, greaterThanOrEqualTo: 4 },
+        a0: { equalTo: 0.6 },
+        a1: { equalTo: 1.1 },
       },
       fileName: "fri_sav.png",
       position: { left: "0px", top: "696px" },

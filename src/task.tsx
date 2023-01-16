@@ -22,15 +22,15 @@ export default (props) => {
         return !checkValue(answer, requirement);
       }
     );
-    if (allAnsweredOk) answerClick();
+    if (allAnsweredOk) answerClick(newAnswers);
     else setAnswers(newAnswers);
   };
   const closeClick = () => {
     setCurrentTaskId(null);
   };
-  const answerClick = (e) => {
+  const answerClick = (newAnswers) => {
     const r = { ...route };
-    answers.forEach((answer, index) => {
+    newAnswers.forEach((answer, index) => {
       r[currentTaskId + index] = answer;
     });
 
