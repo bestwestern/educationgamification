@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { checkValue } from "./utils";
 export default (props) => {
-  const { currentTaskId, config, route, setCurrentTaskId } = props;
+  const { currentTaskId, config, route, setRoute, setCurrentTaskId } = props;
   console.log(props);
   const not_num_period = new RegExp("[^0-9.]");
   useEffect(() => {}, []);
@@ -38,10 +38,9 @@ export default (props) => {
     Object.entries(r).forEach(([id, answer]) => {
       url += id + "=" + answer + "&";
     });
-    location.href = url.substring(0, url.length - 1);
-    setTimeout(() => {
-      location.reload();
-    }, 50);
+    setCurrentTaskId(null);
+    setRoute(r);
+    history.pushState(null, "", url.substring(0, url.length - 1));
   };
   const answerCount = answers.filter(
     (answer) => answer && answer.length

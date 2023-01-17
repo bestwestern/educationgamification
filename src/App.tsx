@@ -20,11 +20,9 @@ export default () => {
       (event) => {
         let paramString = window.location.search.split("?")[1];
         let queryString = new URLSearchParams(paramString);
-        const [route, setRoute] = useState(
-          Object.fromEntries(queryString.entries())
-        );
-        setCurrentTaskId(null);
+        console.log("popstate");
         setRoute(Object.fromEntries(queryString.entries()));
+        setCurrentTaskId(null);
       },
       // }),
       false
@@ -76,10 +74,12 @@ export default () => {
       <Task
         currentTaskId={currentTaskId}
         route={route}
+        setRoute={setRoute}
         config={config}
         setCurrentTaskId={setCurrentTaskId}
       ></Task>
     );
+  console.log({ route });
   return (
     <div>
       <h1>Overskrift?</h1>
