@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { checkValue } from "./utils";
 import { config } from "./config";
 import Task from "./task";
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = "https://cmqxnlontexbrcgilpqs.supabase.co";
-const supabase = createClient(
-  supabaseUrl,
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtcXhubG9udGV4YnJjZ2lscHFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDgyMzgxMjYsImV4cCI6MTk2MzgxNDEyNn0.r-fRpNtLRnGUIji-sAu2ecAY-d635SsGHS08Va5-u20"
-);
+// import { createClient } from "@supabase/supabase-js";
+// const supabaseUrl = "https://cmqxnlontexbrcgilpqs.supabase.co";
+// const supabase = createClient(
+//   supabaseUrl,
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtcXhubG9udGV4YnJjZ2lscHFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDgyMzgxMjYsImV4cCI6MTk2MzgxNDEyNn0.r-fRpNtLRnGUIji-sAu2ecAY-d635SsGHS08Va5-u20"
+// );
 let channel = null;
 export default () => {
   let paramString = window.location.search.split("?")[1];
@@ -20,49 +20,48 @@ export default () => {
       (event) => {
         let paramString = window.location.search.split("?")[1];
         let queryString = new URLSearchParams(paramString);
-        console.log("popstate");
         setRoute(Object.fromEntries(queryString.entries()));
         setCurrentTaskId(null);
       },
       // }),
       false
     );
-    channel = supabase.channel("online-users", {
-      config: {
-        presence: {
-          key: Math.random() + "x",
-        },
-      },
-    });
+    // channel = supabase.channel("online-users", {
+    //   config: {
+    //     presence: {
+    //       key: Math.random() + "x",
+    //     },
+    //   },
+    // });
 
-    channel.on("presence", { event: "sync" }, () => {
-      console.log("Online users: ", channel.presenceState());
-    });
+    // channel.on("presence", { event: "sync" }, () => {
+    //   console.log("Online users: ", channel.presenceState());
+    // });
 
-    channel.on("presence", { event: "join" }, ({ newPresences }) => {
-      console.log("New users have joined: ", newPresences);
-    });
+    // channel.on("presence", { event: "join" }, ({ newPresences }) => {
+    //   console.log("New users have joined: ", newPresences);
+    // });
 
-    channel.on("presence", { event: "leave" }, ({ leftPresences }) => {
-      console.log("Users have left: ", leftPresences);
-    });
+    // channel.on("presence", { event: "leave" }, ({ leftPresences }) => {
+    //   console.log("Users have left: ", leftPresences);
+    // });
 
-    channel.subscribe(async (status) => {
-      if (status === "SUBSCRIBED") {
-        const status = await channel.track({
-          online_at: new Date().toISOString(),
-        });
-        console.log(status);
-      }
-    });
+    // channel.subscribe(async (status) => {
+    //   if (status === "SUBSCRIBED") {
+    //     const status = await channel.track({
+    //       online_at: new Date().toISOString(),
+    //     });
+    //     console.log(status);
+    //   }
+    // });
   }, []);
   useEffect(() => {
     console.log({ route, currentTaskId });
-    channel.track({
-      online_at: new Date().toISOString(),
-      route,
-      currentTaskId,
-    });
+    // channel.track({
+    //   online_at: new Date().toISOString(),
+    //   route,
+    //   currentTaskId,
+    // });
   }, [route, currentTaskId]);
   const { tasks, rootImageFileName, dynamicImages } = config;
   const taskClick = (e, id) => {
