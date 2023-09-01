@@ -8,6 +8,13 @@ export default () => {
   const [route, setRoute] = useState(Object.fromEntries(queryString.entries()));
   const [currentTaskId, setCurrentTaskId] = useState();
   useEffect(() => {
+    setTimeout(() => {
+      document
+        .getElementById("mapImage")
+        .addEventListener("mousemove", function (event) {
+          coords.innerHTML = "x: " + event.offsetX + "<br/>y: " + event.offsetY;
+        });
+    }, 2000);
     window.addEventListener(
       "popstate",
       (event) => {
@@ -38,27 +45,67 @@ export default () => {
         setCurrentTaskId={setCurrentTaskId}
       ></Task>
     );
-  console.log({ route });
   return (
     <div>
-      <h1>Overskrift?</h1>
+      <h1 className="ml-3 text-3xl font-semibold text-gray-900">Escaperoom</h1>
+      <div style={{ position: "absolute", left: 0, top: 0, maxWidth: "1px" }}>
+        {dynamicImages.map((di, index) => {
+          const { answersRequired, fileName, position } = di;
+
+          return <img key={fileName + index} src={fileName}></img>;
+        })}
+        {Object.entries(tasks).map(
+          (
+            [id, { image, wrongAnswerImage, imageIfNotRequiredAnswers }],
+            index
+          ) => {
+            return (
+              <div key={id}>
+                <img src={image}></img>
+                <img src={wrongAnswerImage}></img>
+                <img src={imageIfNotRequiredAnswers}></img>
+              </div>
+            );
+          }
+        )}
+      </div>
       <img
+        id="mapImage"
         useMap="#workmap"
         style={{ position: "absolute", left: 0, top: "50px" }}
         src={rootImageFileName}
       ></img>
       <map name="workmap">
-        {Object.entries(tasks).map(([id, { coords }]) => {
-          return (
-            <area
-              href="#"
-              key={id}
-              shape="rect"
-              coords={coords}
-              onClick={(e) => taskClick(e, id)}
-            />
-          );
-        })}
+        {Object.entries(tasks).map(
+          ([id, { coords, shape = "rect", enableWhen }], index) => {
+            const answerMissingToEnable = enableWhen?.find(
+              (requirementProperty) => {
+                let missingAnswerFound = false;
+                for (var answerProp in requirementProperty) {
+                  const answer = Number(route[answerProp]);
+                  const valueOk = checkValue(
+                    answer,
+                    requirementProperty[answerProp]
+                  );
+                  if (!valueOk) missingAnswerFound = true;
+                }
+                return missingAnswerFound;
+              }
+            );
+            if (answerMissingToEnable) return null;
+            return (
+              <area
+                style={{ outlineColor: "red" }}
+                href="#"
+                tabIndex={index}
+                key={id}
+                shape={shape}
+                coords={coords}
+                onClick={(e) => taskClick(e, id)}
+              />
+            );
+          }
+        )}
       </map>
       {dynamicImages.map((di, index) => {
         const { answersRequired, fileName, position } = di;
