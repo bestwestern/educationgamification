@@ -6,6 +6,8 @@ export default (props) => {
   useEffect(() => {}, []);
   const [answers, setAnswers] = useState([]);
   const [answeredWrong, setAnsweredWrong] = useState(false);
+  const [imageToShowBeforeGoingBack, setImageToShowBeforeGoingBack] =
+    useState();
   const currentTask = config.tasks[currentTaskId];
   const {
     image,
@@ -15,6 +17,7 @@ export default (props) => {
     requiredAnswersToShowThisTask,
     imageIfNotRequiredAnswers,
     wrongAnswerImage,
+    afterAnswerPictures,
   } = currentTask;
   const answerChange = (e, index) => {
     const newAnswer = e.target.value
@@ -23,15 +26,13 @@ export default (props) => {
     let newAnswers = [...answers];
     newAnswers[index] = newAnswer;
 
-    const allAnsweredOk = !acceptableAnswers.find(
-      (requirement, requirementIndex) => {
-        const answer = newAnswers[requirementIndex];
-        if (answer === undefined) return true;
-        return !checkValue(answer, requirement);
-      }
-    );
-    //if (allAnsweredOk) answerClick(newAnswers);
-    //else
+    // const allAnsweredOk = !acceptableAnswers.find(
+    //   (requirement, requirementIndex) => {
+    //     const answer = newAnswers[requirementIndex];
+    //     if (answer === undefined) return true;
+    //     return !checkValue(answer, requirement);
+    //   }
+    // );
     setAnswers(newAnswers);
   };
   const closeClick = () => {
@@ -56,13 +57,36 @@ export default (props) => {
         Object.entries(r)
           .map(([id, answer]) => id + "=" + answer)
           .join("&");
-      setCurrentTaskId(null);
-      setRoute(r);
-      history.pushState(null, "", url);
+      if (afterAnswerPictures) {
+        const el = afterAnswerPictures.find((el) => {
+          const { answersRequired } = el;
+          const pictureRequirementOk = !answersRequired.find(
+            (requirement, requirementIndex) => {
+              const answer = answers[requirementIndex];
+              if (answer === undefined) return true;
+              return !checkValue(answer, requirement);
+            }
+          );
+          return pictureRequirementOk;
+        });
+        console.log({ el });
+        if (el) {
+          setImageToShowBeforeGoingBack({ url: el.fileName, r, image });
+        } else {
+          setCurrentTaskId(null);
+          setRoute(r);
+          history.pushState(null, "", url);
+        }
+      } else {
+        setCurrentTaskId(null);
+        setRoute(r);
+        history.pushState(null, "", url);
+      }
     } else {
       setAnsweredWrong(true);
     }
   };
+
   // const answerCount = answers.filter(
   //   (answer) => answer && answer.length
   // ).length;
@@ -140,21 +164,23 @@ export default (props) => {
             <img className="pt-10" src={"/" + image}></img>
           )}
           {answeredWrong && wrongAnswerImage && (
-            <div className="sm:w-1 md:w-1/2 ">
-              <div className="relative">
-                <img className="pt-10" src={"/" + wrongAnswerImage}></img>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    setAnswers([]);
-                    setAnsweredWrong(false);
-                  }}
-                  className="absolute right-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                >
-                  Ok
-                </button>
+            <>
+              <img className="pt-10" src={"/" + wrongAnswerImage}></img>
+              <div className="sm:w-1 md:w-1/2 ">
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      setAnswers([]);
+                      setAnsweredWrong(false);
+                    }}
+                    className="absolute right-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                  >
+                    Ok
+                  </button>
+                </div>
               </div>
-            </div>
+            </>
           )}
           {answerMissingToShow && imageIfNotRequiredAnswers && (
             <img className="pt-10" src={"/" + imageIfNotRequiredAnswers}></img>

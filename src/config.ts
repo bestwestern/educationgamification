@@ -19,7 +19,6 @@ const config = {
     },
     b: {
       image: "b1_bjaelke.jpg",
-
       questions: [{ text: "Bjælke 1" }, { text: "Bjælke 2" }],
       coords: "370,480,800,900",
       secondImage: {
@@ -44,25 +43,41 @@ const config = {
       acceptableAnswers: [{ equalTo: 5.892 }],
     },
     d: {
-      image: "D_01_bolte_i_bjaelke.jpg",
-      wrongAnswerImage: "billeder/D.02 bolte i bjælke.jpg",
-      coords: "350,500,450,600",
+      image: "d_bolte.jpg",
+      wrongAnswerImage: "d_bolte_wrong.jpg",
+      coords: "260,360,100",
+      shape: "circle",
       questions: [{ text: "h1: (h2=300-h1)" }],
       requiredAnswersToShowThisTask: [{ b2: { in: [1, 2] } }],
-      imageIfNotRequiredAnswers: "E_bjaelke_foerst.jpg",
+      imageIfNotRequiredAnswers: "d_bolte_hint.jpg",
       acceptableAnswers: [{ lessThanOrEqualTo: 250, greaterThanOrEqualTo: 50 }],
     },
     f: {
       enableWhen: [{ b2: { in: [1, 2] } }],
-      image: "F_01_Saddelhak.jpg",
-      coords: "400,280,450,380",
+      image: "f_saddelhak.jpg",
+      shape: "circle",
+      coords: "320,225,100",
       questions: [{ text: "Svar" }],
       requiredAnswersToShowThisTask: [
         { a0: { equalTo: 0.6 } },
         { a1: { equalTo: 1.1 } },
       ],
-      imageIfNotRequiredAnswers: "G_Faa_saven_fri_foerst.jpg",
-      acceptableAnswers: [{ equalTo: 5.892 }],
+      afterAnswerPictures: [
+        {
+          fileName: "f_saddelhak2.jpg",
+          answersRequired: [
+            { lessThanOrEqualTo: 0.5, greaterThanOrEqualTo: 0 },
+          ],
+        },
+        {
+          fileName: "f_saddelhak3.jpg",
+          answersRequired: [
+            { lessThanOrEqualTo: 1.5, greaterThanOrEqualTo: 0.5000001 },
+          ],
+        },
+      ],
+      imageIfNotRequiredAnswers: "f_saddel_sav_fri_foerst.jpg",
+      acceptableAnswers: [{ greaterThanOrEqualTo: 0 }],
     },
   },
   dynamicImages: [
@@ -71,7 +86,7 @@ const config = {
         a0: { equalTo: 0.6 },
         a1: { equalTo: 1.1 },
       },
-      fileName: "fri_sav.png",
+      fileName: "a_fri_sav.png",
       position: { left: "36px", top: "477px" },
     },
     {
@@ -80,8 +95,59 @@ const config = {
         b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
         b2: { equalTo: 1 },
       },
-      fileName: "storbjal.JPG",
-      position: { left: "250px", top: "200px" },
+      fileName: "b_lille_bjaelke.png",
+      position: { left: "285px", top: "249px" },
+    },
+    {
+      answersRequired: {
+        b0: { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
+        b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+        b2: { equalTo: 2 },
+      },
+      fileName: "b_stor_bjaelke.png",
+      position: { left: "279px", top: "240px" },
+    },
+    {
+      answersRequired: {
+        b0: { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
+        b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+        b2: { equalTo: 2 },
+      },
+      fileName: "b_stor_bjaelke_vaek.png",
+      position: { left: "350px", top: "505px" },
+    },
+    {
+      answersRequired: {
+        b0: { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
+        b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+        b2: { equalTo: 1 },
+      },
+      fileName: "b_lille_bjaelke_vaek.png",
+      position: { left: "358px", top: "575px" },
+    },
+    {
+      answersRequired: {
+        b2: { equalTo: 1 },
+        d0: { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 150 },
+      },
+      fileName: "d_bolt_i_lille.png",
+      position: { left: "245px", top: "256px" },
+    },
+    {
+      answersRequired: {
+        b2: { equalTo: 2 },
+        d0: { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 150 },
+      },
+      fileName: "d_bolt_i_stor.png",
+      position: { left: "264px", top: "243px" },
+    },
+    {
+      answersRequired: {
+        b2: { equalTo: 2 },
+        d0: { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 150 },
+      },
+      fileName: "d_bolt_i_stor.png",
+      position: { left: "264px", top: "243px" },
     },
   ],
 };
@@ -90,4 +156,4 @@ export { config };
 
 // preload all images in invisible div
 // go back skal annullere task hvis der er valgt task
-// 36,427
+// 285,199

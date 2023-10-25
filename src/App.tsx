@@ -8,13 +8,6 @@ export default () => {
   const [route, setRoute] = useState(Object.fromEntries(queryString.entries()));
   const [currentTaskId, setCurrentTaskId] = useState();
   useEffect(() => {
-    setTimeout(() => {
-      document
-        .getElementById("mapImage")
-        .addEventListener("mousemove", function (event) {
-          coords.innerHTML = "x: " + event.offsetX + "<br/>y: " + event.offsetY;
-        });
-    }, 2000);
     window.addEventListener(
       "popstate",
       (event) => {
