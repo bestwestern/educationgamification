@@ -95,7 +95,6 @@ export default () => {
             if (answerMissingToEnable) return null;
             return (
               <area
-                style={{ outlineColor: "red" }}
                 href="#"
                 tabIndex={index}
                 key={id}

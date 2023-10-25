@@ -1,14 +1,14 @@
 const config = {
-  rootImageFileName: "startrummetlowres.jpg",
+  rootImageFileName: "start.jpg",
   tasks: {
     a: {
-      image: "sav.jpg",
+      image: "a_sav.jpg",
       questions: [
         { html: "<p>K<sub>MOD,P<o:p></o:p></sub></p>" },
         { html: "<p>K<sub>MOD,Ø<o:p></o:p></sub></p>" },
       ],
       shape: "circle",
-      coords: "180,760,150",
+      coords: "103,512,100",
       ht: "Y=x<sup>2",
       acceptableAnswers: [
         //CLOSE WHEN..
@@ -18,11 +18,12 @@ const config = {
       helpText: "jkl",
     },
     b: {
-      image: "b.jpg",
+      image: "b1_bjaelke.jpg",
+
       questions: [{ text: "Bjælke 1" }, { text: "Bjælke 2" }],
-      coords: "900,700,1100,900",
+      coords: "370,480,800,900",
       secondImage: {
-        fileName: "b2.jpg",
+        fileName: "b2_bjaelke.jpg",
         secondaryQuestions: [{ text: "Hvilken bjælke vælger du?" }],
         answersRequired: [
           { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
@@ -37,7 +38,8 @@ const config = {
     },
     c: {
       image: "c_kuglelaas.jpg",
-      coords: "250,200,350,300",
+      shape: "circle",
+      coords: "200,150,50",
       questions: [{ text: "Svar" }],
       acceptableAnswers: [{ equalTo: 5.892 }],
     },
@@ -70,7 +72,7 @@ const config = {
         a1: { equalTo: 1.1 },
       },
       fileName: "fri_sav.png",
-      position: { left: "0px", top: "696px" },
+      position: { left: "36px", top: "477px" },
     },
     {
       answersRequired: {
@@ -88,4 +90,4 @@ export { config };
 
 // preload all images in invisible div
 // go back skal annullere task hvis der er valgt task
-//
+// 36,427
