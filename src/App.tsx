@@ -78,7 +78,13 @@ export default () => {
     <div>
       <h1 className="ml-3 text-3xl font-semibold text-gray-900">Escaperoom</h1>
       <div style={{ position: "absolute", left: 0, top: 0, maxWidth: "1px" }}>
-        {dynamicImages.map((di, index) => {
+        {[
+          ...dynamicImages,
+          { fileName: "help1.jpg" },
+          { fileName: "help2.jpg" },
+          { fileName: "help3.jpg" },
+          { fileName: "help4.jpg" },
+        ].map((di, index) => {
           const { answersRequired, fileName, position } = di;
 
           return <img key={fileName + index} src={fileName}></img>;
