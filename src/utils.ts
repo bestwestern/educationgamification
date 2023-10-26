@@ -1,5 +1,4 @@
 function checkValue(value, requirementObject) {
-  console.log({ value, requirementObject });
   //return true if ok
   if (!requirementObject) return true;
   if (value === undefined) return false;

@@ -7,6 +7,8 @@ export default () => {
   let queryString = new URLSearchParams(paramString);
   const [route, setRoute] = useState(Object.fromEntries(queryString.entries()));
   const [currentTaskId, setCurrentTaskId] = useState();
+  const [helpImage, setHelpImage] = useState();
+  const [helpStatus, setHelpStatus] = useState(0);
   useEffect(() => {
     window.addEventListener(
       "popstate",
@@ -28,6 +30,40 @@ export default () => {
     e.preventDefault();
     setCurrentTaskId(id);
   };
+  const helpClick = (e) => {
+    if (route.b2) {
+      setHelpImage("help4.jpg");
+    } else {
+      const newHelpStatus = Math.min(3, helpStatus + 1);
+      setHelpStatus(newHelpStatus);
+      setHelpImage("help" + newHelpStatus + ".jpg");
+    }
+  };
+  console.log(helpImage);
+  if (helpImage) {
+    return (
+      <div className="flex justify-center">
+        <div className="sm:w-1 md:w-1/2 ">
+          <div className="relative">
+            <img className="pt-10" src={"/" + helpImage}></img>
+            <div className="sm:w-1 md:w-1/2 ">
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    setHelpImage(null);
+                  }}
+                  className="absolute right-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                >
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (currentTaskId)
     return (
       <Task
@@ -119,6 +155,14 @@ export default () => {
           )
         );
       })}
+      <button
+        type="button"
+        style={{ top: "650px" }}
+        onClick={helpClick}
+        className="absolute left-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        Hjælp
+      </button>
     </div>
   );
 };
