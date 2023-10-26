@@ -101,13 +101,14 @@ export default () => {
       </map>
       {dynamicImages.map((di, index) => {
         const { answersRequired, fileName, position } = di;
-
         const hide = Object.keys(answersRequired).find((id) => {
           const answer = route[id];
           const requirement = answersRequired[id];
           const valueOk = checkValue(answer, requirement);
+          // console.log({ valueOk, answer, requirement });
           return !valueOk;
         });
+        if (!hide) console.log({ di, hide });
         return (
           !hide && (
             <img

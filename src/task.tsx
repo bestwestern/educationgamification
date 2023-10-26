@@ -71,7 +71,12 @@ export default (props) => {
         });
         console.log({ el });
         if (el) {
-          setImageToShowBeforeGoingBack({ url: el.fileName, r, image });
+          setImageToShowBeforeGoingBack({
+            fileName: el.fileName,
+            url,
+            r,
+            image,
+          });
         } else {
           setCurrentTaskId(null);
           setRoute(r);
@@ -128,6 +133,54 @@ export default (props) => {
           })}
         </>
       );
+  }
+  if (imageToShowBeforeGoingBack) {
+    const { fileName, url, r } = imageToShowBeforeGoingBack;
+    if (fileName === "finish.mov")
+      return (
+        <>
+          <video autoPlay={true} width={"1000px"}>
+            <source src="finish.mov" type="video/ogg" />
+          </video>
+          <br />
+          <br />
+          <button
+            type="button"
+            onClick={(e) => {
+              setCurrentTaskId(null);
+              setRoute({});
+              history.pushState(null, "", location.origin);
+            }}
+            className=" text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+          >
+            Tillykke!
+          </button>
+        </>
+      );
+    return (
+      <div className="flex justify-center">
+        <div className="sm:w-1 md:w-1/2 ">
+          <div className="relative">
+            <img className="pt-10" src={"/" + fileName}></img>
+            <div className="sm:w-1 md:w-1/2 ">
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    setCurrentTaskId(null);
+                    setRoute(r);
+                    history.pushState(null, "", url);
+                  }}
+                  className="absolute right-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                >
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   const answerMissingToShow = requiredAnswersToShowThisTask?.find(
     (requirementProperty) => {

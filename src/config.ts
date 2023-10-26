@@ -41,6 +41,12 @@ const config = {
       coords: "200,150,50",
       questions: [{ text: "Svar" }],
       acceptableAnswers: [{ equalTo: 5.892 }],
+      afterAnswerPictures: [
+        {
+          fileName: "finish.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+      ],
     },
     d: {
       image: "d_bolte.jpg",
@@ -75,9 +81,26 @@ const config = {
             { lessThanOrEqualTo: 1.5, greaterThanOrEqualTo: 0.5000001 },
           ],
         },
+        {
+          fileName: "f_saddelhak4.jpg",
+          answersRequired: [
+            { lessThanOrEqualTo: 2.5, greaterThanOrEqualTo: 1.5000001 },
+          ],
+        },
+        {
+          fileName: "f_saddelhak5.jpg",
+          answersRequired: [
+            { lessThanOrEqualTo: 3.9999999, greaterThanOrEqualTo: 2.5000001 },
+          ],
+        },
+        {
+          fileName: "f_saddelhak6.jpg",
+          answersRequired: [{ lessThanOrEqualTo: 5, greaterThanOrEqualTo: 4 }],
+        },
       ],
       imageIfNotRequiredAnswers: "f_saddel_sav_fri_foerst.jpg",
-      acceptableAnswers: [{ greaterThanOrEqualTo: 0 }],
+      acceptableAnswers: [{ greaterThanOrEqualTo: 0, lessThanOrEqualTo: 5 }],
+      wrongAnswerImage: "f_saddelhak_wrong.jpg",
     },
   },
   dynamicImages: [
@@ -149,6 +172,41 @@ const config = {
       fileName: "d_bolt_i_stor.png",
       position: { left: "264px", top: "243px" },
     },
+    {
+      answersRequired: {
+        f0: { lessThanOrEqualTo: 0.5, greaterThanOrEqualTo: 0 },
+      },
+      fileName: "f_lille_saddelhak2.png",
+      position: { left: "254px", top: "262px" },
+    },
+    {
+      answersRequired: {
+        f0: { lessThanOrEqualTo: 1.5, greaterThanOrEqualTo: 0.500001 },
+      },
+      fileName: "f_lille_saddelhak3.png",
+      position: { left: "253px", top: "262px" },
+    },
+    {
+      answersRequired: {
+        f0: { lessThanOrEqualTo: 2.5, greaterThanOrEqualTo: 1.5000001 },
+      },
+      fileName: "f_lille_saddelhak4.png",
+      position: { left: "254px", top: "262px" },
+    },
+    {
+      answersRequired: {
+        f0: { lessThanOrEqualTo: 3.9999999, greaterThanOrEqualTo: 2.5000001 },
+      },
+      fileName: "f_lille_saddelhak5.png",
+      position: { left: "254px", top: "262px" },
+    },
+    {
+      answersRequired: {
+        f0: { lessThanOrEqualTo: 5, greaterThanOrEqualTo: 4 },
+      },
+      fileName: "f_lille_saddelhak6.png",
+      position: { left: "256px", top: "264px" },
+    },
   ],
 };
 export { config };
@@ -157,3 +215,27 @@ export { config };
 // preload all images in invisible div
 // go back skal annullere task hvis der er valgt task
 // 285,199
+/*       { lessThanOrEqualTo: 0.5, greaterThanOrEqualTo: 0 },
+          ],
+        },
+        {
+          fileName: "f_saddelhak3.jpg",
+          answersRequired: [
+            { lessThanOrEqualTo: 1.5, greaterThanOrEqualTo: 0.5000001 },
+          ],
+        },
+        {
+          fileName: "f_saddelhak4.jpg",
+          answersRequired: [
+            { lessThanOrEqualTo: 2.5, greaterThanOrEqualTo: 1.5000001 },
+          ],
+        },
+        {
+          fileName: "f_saddelhak5.jpg",
+          answersRequired: [
+            { lessThanOrEqualTo: 3.9999999, greaterThanOrEqualTo: 2.5000001 },
+          ],
+        },
+        {
+          fileName: "f_saddelhak6.jpg",
+          answersRequired: [{ lessThanOrEqualTo: 5, greaterThanOrEqualTo: 4 }],*/
