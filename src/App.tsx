@@ -5,11 +5,18 @@ import Task from "./task";
 export default () => {
   let paramString = window.location.search.split("?")[1];
   let queryString = new URLSearchParams(paramString);
+  const [mousePos, setMousePos] = useState({});
   const [route, setRoute] = useState(Object.fromEntries(queryString.entries()));
   const [currentTaskId, setCurrentTaskId] = useState();
   const [helpImage, setHelpImage] = useState();
   const [helpStatus, setHelpStatus] = useState(0);
   useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePos({ x: event.clientX, y: event.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
     window.addEventListener(
       "popstate",
       (event) => {
@@ -21,7 +28,11 @@ export default () => {
       // }),
       false
     );
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
+
   useEffect(() => {
     console.log({ route, currentTaskId });
   }, [route, currentTaskId]);
@@ -39,7 +50,10 @@ export default () => {
       setHelpImage("help" + newHelpStatus + ".jpg");
     }
   };
-  console.log(helpImage);
+  const mouseClick = (e) => {
+    console.log({ mousePos });
+  };
+  const cursor = mousePos.x > 200 ? "hand" : "crosshair"; // Hvis inde i rektangel angivet i en task - brug hand ellers default
   if (helpImage) {
     return (
       <div className="flex justify-center">
@@ -75,7 +89,7 @@ export default () => {
       ></Task>
     );
   return (
-    <div>
+    <div onClick={mouseClick} style={{ cursor }}>
       <h1 className="ml-3 text-3xl font-semibold text-gray-900">Escaperoom</h1>
       <div style={{ position: "absolute", left: 0, top: 0, maxWidth: "1px" }}>
         {[
