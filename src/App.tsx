@@ -183,6 +183,9 @@ export default () => {
       >
         Hjælp
       </button>
+      <span style={{ top: "750px" }} className="absolute">
+        {"x:" + (mousePos.x || "..") + ", y:" + (mousePos.y || "...")}
+      </span>
     </div>
   );
 };
