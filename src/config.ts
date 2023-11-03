@@ -8,19 +8,18 @@ const config = {
         { html: "<p>K<sub>MOD,Ø<o:p></o:p></sub></p>" },
       ],
       shape: "circle",
-      coords: "103,512,100",
+      coords: [62, 428, 160, 600],
       ht: "Y=x<sup>2",
       acceptableAnswers: [
         //CLOSE WHEN..
         { equalTo: 0.6 },
         { equalTo: 1.1 },
       ],
-      helpText: "jkl",
     },
     b: {
       image: "b1_bjaelke.jpg",
       questions: [{ text: "Bjælke 1" }, { text: "Bjælke 2" }],
-      coords: "370,480,800,900",
+      coords: [317, 464, 780, 600],
       secondImage: {
         fileName: "b2_bjaelke.jpg",
         secondaryQuestions: [{ text: "Hvilken bjælke vælger du?" }],
@@ -37,8 +36,7 @@ const config = {
     },
     c: {
       image: "c_kuglelaas.jpg",
-      shape: "circle",
-      coords: "200,150,50",
+      coords: [180, 160, 230, 240],
       questions: [{ text: "Svar" }],
       acceptableAnswers: [{ equalTo: 5.892 }],
       afterAnswerPictures: [
@@ -51,8 +49,7 @@ const config = {
     d: {
       image: "d_bolte.jpg",
       wrongAnswerImage: "d_bolte_wrong.jpg",
-      coords: "260,360,100",
-      shape: "circle",
+      coords: [240, 400, 305, 480],
       questions: [{ text: "h1: (h2=300-h1)" }],
       requiredAnswersToShowThisTask: [{ b2: { in: [1, 2] } }],
       imageIfNotRequiredAnswers: "d_bolte_hint.jpg",
@@ -61,8 +58,7 @@ const config = {
     f: {
       enableWhen: [{ b2: { in: [1, 2] } }],
       image: "f_saddelhak.jpg",
-      shape: "circle",
-      coords: "320,225,100",
+      coords: [240, 240, 300, 300],
       questions: [{ text: "Svar" }],
       requiredAnswersToShowThisTask: [
         { a0: { equalTo: 0.6 } },

@@ -50,10 +50,6 @@ export default () => {
       setHelpImage("help" + newHelpStatus + ".jpg");
     }
   };
-  const mouseClick = (e) => {
-    console.log({ mousePos });
-  };
-  const cursor = mousePos.x > 200 ? "hand" : "crosshair"; // Hvis inde i rektangel angivet i en task - brug hand ellers default
   if (helpImage) {
     return (
       <div className="flex justify-center">
@@ -88,8 +84,37 @@ export default () => {
         setCurrentTaskId={setCurrentTaskId}
       ></Task>
     );
+  const mouseClick = (e) => {
+    console.log({ mousePos });
+  };
+  const { x, y } = mousePos;
+
+  const hoveredTask = Object.entries(tasks).find(
+    ([id, { coords, shape = "rect", enableWhen }]) => {
+      if (
+        !enableWhen?.find((requirementProperty) => {
+          let missingAnswerFound = false;
+          for (var answerProp in requirementProperty) {
+            const answer = Number(route[answerProp]);
+            const valueOk = checkValue(answer, requirementProperty[answerProp]);
+            if (!valueOk) missingAnswerFound = true;
+          }
+          return missingAnswerFound;
+        }) &&
+        x > coords[0] &&
+        x < coords[2] &&
+        y > coords[1] &&
+        y < coords[3]
+      )
+        return true;
+    }
+  );
+  console.log(hoveredTask);
   return (
-    <div onClick={mouseClick} style={{ cursor }}>
+    <div
+      onClick={mouseClick}
+      style={{ cursor: hoveredTask ? "pointer" : "default" }}
+    >
       <h1 className="ml-3 text-3xl font-semibold text-gray-900">Escaperoom</h1>
       <div style={{ position: "absolute", left: 0, top: 0, maxWidth: "1px" }}>
         {[
@@ -120,41 +145,42 @@ export default () => {
       </div>
       <img
         id="mapImage"
-        useMap="#workmap"
         style={{ position: "absolute", left: 0, top: "50px" }}
         src={rootImageFileName}
       ></img>
-      <map name="workmap">
-        {Object.entries(tasks).map(
-          ([id, { coords, shape = "rect", enableWhen }], index) => {
-            const answerMissingToEnable = enableWhen?.find(
-              (requirementProperty) => {
-                let missingAnswerFound = false;
-                for (var answerProp in requirementProperty) {
-                  const answer = Number(route[answerProp]);
-                  const valueOk = checkValue(
-                    answer,
-                    requirementProperty[answerProp]
-                  );
-                  if (!valueOk) missingAnswerFound = true;
+      {false && (
+        <map name="workmap">
+          {Object.entries(tasks).map(
+            ([id, { coords, shape = "rect", enableWhen }], index) => {
+              const answerMissingToEnable = enableWhen?.find(
+                (requirementProperty) => {
+                  let missingAnswerFound = false;
+                  for (var answerProp in requirementProperty) {
+                    const answer = Number(route[answerProp]);
+                    const valueOk = checkValue(
+                      answer,
+                      requirementProperty[answerProp]
+                    );
+                    if (!valueOk) missingAnswerFound = true;
+                  }
+                  return missingAnswerFound;
                 }
-                return missingAnswerFound;
-              }
-            );
-            if (answerMissingToEnable) return null;
-            return (
-              <area
-                href="#"
-                tabIndex={index}
-                key={id}
-                shape={shape}
-                coords={coords}
-                onClick={(e) => taskClick(e, id)}
-              />
-            );
-          }
-        )}
-      </map>
+              );
+              if (answerMissingToEnable) return null;
+              return (
+                <area
+                  href="#"
+                  tabIndex={index}
+                  key={id}
+                  shape={shape}
+                  coords={coords}
+                  onClick={(e) => taskClick(e, id)}
+                />
+              );
+            }
+          )}
+        </map>
+      )}
       {dynamicImages.map((di, index) => {
         const { answersRequired, fileName, position } = di;
         const hide = Object.keys(answersRequired).find((id) => {
