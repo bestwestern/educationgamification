@@ -19,7 +19,7 @@ const config = {
     b: {
       image: "b1_bjaelke.jpg",
       questions: [{ text: "Bjælke 1" }, { text: "Bjælke 2" }],
-      coords: [317, 464, 780, 600],
+      coords: [317, 530, 780, 600],
       secondImage: {
         fileName: "b2_bjaelke.jpg",
         secondaryQuestions: [{ text: "Hvilken bjælke vælger du?" }],
