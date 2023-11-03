@@ -112,7 +112,7 @@ export default () => {
   console.log(hoveredTask);
   return (
     <div
-      onClick={mouseClick}
+      onClick={(e) => hoveredTask && setCurrentTaskId(hoveredTask[0])}
       style={{ cursor: hoveredTask ? "pointer" : "default" }}
     >
       <h1 className="ml-3 text-3xl font-semibold text-gray-900">Escaperoom</h1>
