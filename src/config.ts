@@ -40,8 +40,14 @@ const config = {
       questions: [{ text: "Svar" }],
       acceptableAnswers: [{ equalTo: 5.892 }],
       afterAnswerPictures: [
+        //første vælges - så tag strengeste krav først
         {
+          enableWhen: [{ b2: { in: [1, 2] } }],
           fileName: "finish.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          fileName: "video01.mov",
           answersRequired: [{ equalTo: 5.892 }],
         },
       ],

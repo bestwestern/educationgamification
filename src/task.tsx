@@ -59,15 +59,29 @@ export default (props) => {
           .join("&");
       if (afterAnswerPictures) {
         const el = afterAnswerPictures.find((el) => {
-          const { answersRequired } = el;
-          const pictureRequirementOk = !answersRequired.find(
+          const { answersRequired, enableWhen } = el;
+          const pictureRequirementThisTaskOk = !answersRequired.find(
             (requirement, requirementIndex) => {
               const answer = answers[requirementIndex];
               if (answer === undefined) return true;
               return !checkValue(answer, requirement);
             }
           );
-          return pictureRequirementOk;
+          const pictureRequirementOtherTasksOk = !enableWhen?.find(
+            (requirementProperty) => {
+              let missingAnswerFound = false;
+              for (var answerProp in requirementProperty) {
+                const answer = Number(route[answerProp]);
+                const valueOk = checkValue(
+                  answer,
+                  requirementProperty[answerProp]
+                );
+                if (!valueOk) missingAnswerFound = true;
+              }
+              return missingAnswerFound;
+            }
+          );
+          return pictureRequirementThisTaskOk && pictureRequirementOtherTasksOk;
         });
         console.log({ el });
         if (el) {
@@ -136,11 +150,14 @@ export default (props) => {
   }
   if (imageToShowBeforeGoingBack) {
     const { fileName, url, r } = imageToShowBeforeGoingBack;
-    if (fileName === "finish.mov")
+    const finished = fileName === "finish.mov";
+    const isVideo = fileName.substr(-4) === ".mov";
+    console.log(isVideo);
+    if (isVideo)
       return (
         <>
           <video autoPlay={true} width={"1000px"}>
-            <source src="finish.mov" type="video/ogg" />
+            <source src={fileName} type="video/ogg" />
           </video>
           <br />
           <br />
@@ -149,11 +166,11 @@ export default (props) => {
             onClick={(e) => {
               setCurrentTaskId(null);
               setRoute({});
-              history.pushState(null, "", location.origin);
+              history.pushState(null, "", finished ? location.origin : url);
             }}
             className=" text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
-            Tillykke!
+            {finished ? "Tillykke!" : "Gå tilbage"}
           </button>
         </>
       );
