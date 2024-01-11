@@ -1,7 +1,12 @@
 function checkValue(value, requirementObject) {
-  //return true if ok
   if (!requirementObject) return true;
   if (value === undefined) return false;
+  if (requirementObject.notAnswered) {
+    console.log({ value, requirementObject });
+  }
+  if (requirementObject.notAnswered && value !== undefined) {
+    return false;
+  }
   if (
     requirementObject.equalTo !== undefined &&
     requirementObject.equalTo != value

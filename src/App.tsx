@@ -84,9 +84,7 @@ export default () => {
         setCurrentTaskId={setCurrentTaskId}
       ></Task>
     );
-  const mouseClick = (e) => {
-    console.log({ mousePos });
-  };
+
   const { x, y } = mousePos;
 
   const hoveredTask = Object.entries(tasks).find(
@@ -109,7 +107,6 @@ export default () => {
         return true;
     }
   );
-  console.log(hoveredTask);
   return (
     <div
       onClick={(e) => hoveredTask && setCurrentTaskId(hoveredTask[0])}
@@ -148,49 +145,20 @@ export default () => {
         style={{ position: "absolute", left: 0, top: "50px" }}
         src={rootImageFileName}
       ></img>
-      {false && (
-        <map name="workmap">
-          {Object.entries(tasks).map(
-            ([id, { coords, shape = "rect", enableWhen }], index) => {
-              const answerMissingToEnable = enableWhen?.find(
-                (requirementProperty) => {
-                  let missingAnswerFound = false;
-                  for (var answerProp in requirementProperty) {
-                    const answer = Number(route[answerProp]);
-                    const valueOk = checkValue(
-                      answer,
-                      requirementProperty[answerProp]
-                    );
-                    if (!valueOk) missingAnswerFound = true;
-                  }
-                  return missingAnswerFound;
-                }
-              );
-              if (answerMissingToEnable) return null;
-              return (
-                <area
-                  href="#"
-                  tabIndex={index}
-                  key={id}
-                  shape={shape}
-                  coords={coords}
-                  onClick={(e) => taskClick(e, id)}
-                />
-              );
-            }
-          )}
-        </map>
-      )}
+
       {dynamicImages.map((di, index) => {
         const { answersRequired, fileName, position } = di;
         const hide = Object.keys(answersRequired).find((id) => {
           const answer = route[id];
           const requirement = answersRequired[id];
           const valueOk = checkValue(answer, requirement);
-          // console.log({ valueOk, answer, requirement });
+          // if (requirement.notAnswered) {
+          //   console.log({ valueOk });
+          // }
           return !valueOk;
         });
-        if (!hide) console.log({ di, hide });
+        // console.log({ fileName, hide });
+        if (!hide) console.log(fileName);
         return (
           !hide && (
             <img

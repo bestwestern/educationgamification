@@ -42,8 +42,76 @@ const config = {
       afterAnswerPictures: [
         //første vælges - så tag strengeste krav først
         {
-          enableWhen: [{ b2: { in: [1, 2] } }],
+          enableWhen: [
+            { b2: { equalTo: 2 } },
+            { a0: { equalTo: 0.6 } },
+            { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
+            { f0: { greaterThanOrEqualTo: 4, lessThanOrEqualTo: 5 } },
+          ],
           fileName: "finish.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [
+            { b2: { equalTo: 2 } },
+            { f0: { lessThan: 4 } }, //dupliker med greaterthan 5
+            { d0: { lessThan: 250 } }, //TJEK
+            { a0: { equalTo: 0.6 } },
+          ],
+          fileName: "video04_1.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [
+            { b2: { equalTo: 2 } },
+            { d0: { lessThan: 250 } },
+            { a0: { equalTo: 0.6 } },
+          ],
+          fileName: "video03_2.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [
+            { b2: { equalTo: 1 } },
+            { d0: { lessThan: 400 } },
+            { a0: { equalTo: 0.6 } },
+          ],
+          fileName: "video03_4.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [{ b2: { equalTo: 2 } }, { d0: { lessThan: 400 } }],
+          fileName: "video03.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [{ b2: { equalTo: 1 } }, { d0: { lessThan: 400 } }],
+          fileName: "video03_3.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [{ b2: { equalTo: 2 } }, { a0: { equalTo: 0.6 } }],
+          fileName: "video02_1.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [{ b2: { equalTo: 1 } }, { a0: { equalTo: 0.6 } }],
+          fileName: "video02_3.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [{ b2: { equalTo: 2 } }],
+          fileName: "video02.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [{ b2: { equalTo: 1 } }],
+          fileName: "video02_2.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [{ a0: { equalTo: 0.6 } }],
+          fileName: "video01_2.mov",
           answersRequired: [{ equalTo: 5.892 }],
         },
         {
@@ -128,6 +196,7 @@ const config = {
         b0: { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
         b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
         b2: { equalTo: 2 },
+        d0: { notAnswered: true },
       },
       fileName: "b_stor_bjaelke.png",
       position: { left: "279px", top: "240px" },
@@ -162,18 +231,12 @@ const config = {
       answersRequired: {
         b2: { equalTo: 2 },
         d0: { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 150 },
+        f0: { notAnswered: true },
       },
       fileName: "d_bolt_i_stor.png",
       position: { left: "264px", top: "243px" },
     },
-    {
-      answersRequired: {
-        b2: { equalTo: 2 },
-        d0: { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 150 },
-      },
-      fileName: "d_bolt_i_stor.png",
-      position: { left: "264px", top: "243px" },
-    },
+
     {
       answersRequired: {
         f0: { lessThanOrEqualTo: 0.5, greaterThanOrEqualTo: 0 },
@@ -200,14 +263,14 @@ const config = {
         f0: { lessThanOrEqualTo: 3.9999999, greaterThanOrEqualTo: 2.5000001 },
       },
       fileName: "f_lille_saddelhak5.png",
-      position: { left: "254px", top: "262px" },
+      position: { left: "255px", top: "262px" },
     },
     {
       answersRequired: {
         f0: { lessThanOrEqualTo: 5, greaterThanOrEqualTo: 4 },
       },
       fileName: "f_lille_saddelhak6.png",
-      position: { left: "256px", top: "264px" },
+      position: { left: "257px", top: "264px" },
     },
   ],
 };

@@ -69,6 +69,7 @@ export default (props) => {
           );
           const pictureRequirementOtherTasksOk = !enableWhen?.find(
             (requirementProperty) => {
+              console.log({ requirementProperty });
               let missingAnswerFound = false;
               for (var answerProp in requirementProperty) {
                 const answer = Number(route[answerProp]);
@@ -76,6 +77,7 @@ export default (props) => {
                   answer,
                   requirementProperty[answerProp]
                 );
+                console.log({ valueOk });
                 if (!valueOk) missingAnswerFound = true;
               }
               return missingAnswerFound;
@@ -152,7 +154,6 @@ export default (props) => {
     const { fileName, url, r } = imageToShowBeforeGoingBack;
     const finished = fileName === "finish.mov";
     const isVideo = fileName.substr(-4) === ".mov";
-    console.log(isVideo);
     if (isVideo)
       return (
         <>
@@ -165,8 +166,10 @@ export default (props) => {
             type="button"
             onClick={(e) => {
               setCurrentTaskId(null);
-              setRoute({});
-              history.pushState(null, "", finished ? location.origin : url);
+              if (finished) {
+                setRoute({});
+                history.pushState(null, "", location.origin);
+              }
             }}
             className=" text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
