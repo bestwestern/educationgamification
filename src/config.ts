@@ -54,9 +54,29 @@ const config = {
         {
           enableWhen: [
             { b2: { equalTo: 2 } },
-            { f0: { lessThan: 4 } }, //dupliker med greaterthan 5
-            { d0: { lessThan: 250 } }, //TJEK
             { a0: { equalTo: 0.6 } },
+            { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
+            { f0: { equalTo: 0 } },
+          ],
+          fileName: "video04_3.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [
+            { b2: { equalTo: 2 } },
+            { a0: { equalTo: 0.6 } },
+            { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
+            { f0: { lessThan: 4 } },
+          ],
+          fileName: "video04_1.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [
+            { b2: { equalTo: 2 } },
+            { a0: { equalTo: 0.6 } },
+            { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
+            { f0: { greaterThan: 5 } },
           ],
           fileName: "video04_1.mov",
           answersRequired: [{ equalTo: 5.892 }],
@@ -242,7 +262,7 @@ const config = {
         f0: { lessThanOrEqualTo: 0.5, greaterThanOrEqualTo: 0 },
       },
       fileName: "f_lille_saddelhak2.png",
-      position: { left: "254px", top: "262px" },
+      position: { left: "255px", top: "262px" },
     },
     {
       answersRequired: {
