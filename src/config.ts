@@ -10,11 +10,7 @@ const config = {
       shape: "circle",
       coords: [62, 428, 160, 600],
       ht: "Y=x<sup>2",
-      acceptableAnswers: [
-        //CLOSE WHEN..
-        { equalTo: 0.6 },
-        { equalTo: 1.1 },
-      ],
+      acceptableAnswers: [{ equalTo: 0.6 }, { equalTo: 1.1 }],
     },
     b: {
       image: "b1_bjaelke.jpg",
@@ -40,7 +36,7 @@ const config = {
       questions: [{ text: "Svar" }],
       acceptableAnswers: [{ equalTo: 5.892 }],
       afterAnswerPictures: [
-        //første vælges - så tag strengeste krav først
+        //første hvor enableWhen er opfyldt vises - så tag strengeste krav først
         {
           enableWhen: [
             { b2: { equalTo: 2 } },
@@ -295,32 +291,3 @@ const config = {
   ],
 };
 export { config };
-//SUPABASE?!
-
-// preload all images in invisible div
-// go back skal annullere task hvis der er valgt task
-// 285,199
-/*       { lessThanOrEqualTo: 0.5, greaterThanOrEqualTo: 0 },
-          ],
-        },
-        {
-          fileName: "f_saddelhak3.jpg",
-          answersRequired: [
-            { lessThanOrEqualTo: 1.5, greaterThanOrEqualTo: 0.5000001 },
-          ],
-        },
-        {
-          fileName: "f_saddelhak4.jpg",
-          answersRequired: [
-            { lessThanOrEqualTo: 2.5, greaterThanOrEqualTo: 1.5000001 },
-          ],
-        },
-        {
-          fileName: "f_saddelhak5.jpg",
-          answersRequired: [
-            { lessThanOrEqualTo: 3.9999999, greaterThanOrEqualTo: 2.5000001 },
-          ],
-        },
-        {
-          fileName: "f_saddelhak6.jpg",
-          answersRequired: [{ lessThanOrEqualTo: 5, greaterThanOrEqualTo: 4 }],*/
