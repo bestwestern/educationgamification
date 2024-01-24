@@ -11,6 +11,7 @@ const config = {
       coords: [62, 428, 160, 600],
       ht: "Y=x<sup>2",
       acceptableAnswers: [{ equalTo: 0.6 }, { equalTo: 1.1 }],
+      wrongAnswerImage: "a2forkertsvar.jpg",
     },
     b: {
       image: "b1_bjaelke.jpg",
@@ -29,6 +30,7 @@ const config = {
         { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
         { in: [1, 2] },
       ],
+      wrongAnswerImage: "b2_2forkertsvar.jpg",
     },
     c: {
       image: "c_kuglelaas.jpg",
