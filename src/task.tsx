@@ -14,6 +14,7 @@ export default (props) => {
     questions,
     secondImage,
     acceptableAnswers,
+    conditionalAccaptableAnswersArray,
     requiredAnswersToShowThisTask,
     imageIfNotRequiredAnswers,
     wrongAnswerImage,
@@ -26,13 +27,6 @@ export default (props) => {
     let newAnswers = [...answers];
     newAnswers[index] = newAnswer;
 
-    // const allAnsweredOk = !acceptableAnswers.find(
-    //   (requirement, requirementIndex) => {
-    //     const answer = newAnswers[requirementIndex];
-    //     if (answer === undefined) return true;
-    //     return !checkValue(answer, requirement);
-    //   }
-    // );
     setAnswers(newAnswers);
   };
   const closeClick = () => {
@@ -43,13 +37,38 @@ export default (props) => {
     answers.forEach((answer, index) => {
       r[currentTaskId + index] = answer;
     });
-    const allAnsweredOk = !acceptableAnswers.find(
-      (requirement, requirementIndex) => {
-        const answer = answers[requirementIndex];
-        if (answer === undefined) return true;
-        return !checkValue(answer, requirement);
-      }
-    );
+    let conditionalAcceptableAnswers = [];
+    if (conditionalAccaptableAnswersArray) {
+      const conditionalAcceptableAnswersObject =
+        conditionalAccaptableAnswersArray.find(({ enableWhen }) => {
+          const enableCondition = enableWhen.find((requirementProperty) => {
+            let missingAnswerFound = false;
+            for (var answerProp in requirementProperty) {
+              const answer = route[answerProp] && Number(route[answerProp]);
+              const valueOk = checkValue(
+                answer,
+                requirementProperty[answerProp]
+              );
+              if (!valueOk) missingAnswerFound = true;
+            }
+            return missingAnswerFound;
+          });
+          if (enableCondition) return false;
+          return true;
+        });
+      if (conditionalAcceptableAnswersObject)
+        conditionalAcceptableAnswers =
+          conditionalAcceptableAnswersObject.acceptableAnswersArray;
+    }
+    console.log(answers);
+    let allAnsweredOk = !(
+      acceptableAnswers || conditionalAcceptableAnswers
+    ).find((requirement, requirementIndex) => {
+      const answer = answers[requirementIndex];
+      console.log({ answer, requirement });
+      if (answer === undefined) return true;
+      return !checkValue(answer, requirement);
+    });
     if (allAnsweredOk) {
       const url =
         location.origin +
@@ -264,31 +283,52 @@ export default (props) => {
         <br />
 
         {showingQuestions &&
-          questions.map((question, index) => {
-            const { text, html } = question;
-            return (
-              <div key={index}>
-                <div dangerouslySetInnerHTML={{ __html: html }}></div>
-                <div className="mb-6">
-                  <label
-                    htmlFor={"q" + index}
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    {text}
-                  </label>
-                  <input
-                    autoFocus={!index}
-                    disabled={!!secondImageComponent}
-                    type="text"
-                    value={answers[index] === undefined ? "" : answers[index]}
-                    id={"q" + index}
-                    onInput={(e) => answerChange(e, index)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+          questions
+            .filter(({ enableWhen }) => {
+              if (enableWhen) {
+                const hideQuestion = enableWhen.find((requirementProperty) => {
+                  let missingAnswerFound = false;
+                  for (var answerProp in requirementProperty) {
+                    const answer =
+                      route[answerProp] && Number(route[answerProp]);
+                    const valueOk = checkValue(
+                      answer,
+                      requirementProperty[answerProp]
+                    );
+                    if (!valueOk) missingAnswerFound = true;
+                  }
+                  return missingAnswerFound;
+                });
+                if (hideQuestion) return false;
+              }
+              return true;
+            })
+            .map((question, index) => {
+              const { text, html } = question;
+
+              return (
+                <div key={index}>
+                  <div dangerouslySetInnerHTML={{ __html: html }}></div>
+                  <div className="mb-6">
+                    <label
+                      htmlFor={"q" + index}
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {text}
+                    </label>
+                    <input
+                      autoFocus={!index}
+                      disabled={!!secondImageComponent}
+                      type="text"
+                      value={answers[index] === undefined ? "" : answers[index]}
+                      id={"q" + index}
+                      onInput={(e) => answerChange(e, index)}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         {secondImageComponent}
         <div className="sm:w-1 md:w-1/2 ">
           <div className="relative">

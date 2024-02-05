@@ -21,18 +21,19 @@ const config = {
         fileName: "b2_bjaelke.jpg",
         secondaryQuestions: [{ text: "Hvilken bjælke vælger du?" }],
         answersRequired: [
-          { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
-          { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+          { lessThanOrEqualTo: 1.2, greaterThanOrEqualTo: 1.1 },
+          { greaterThanOrEqualTo: 3.9, lessThanOrEqualTo: 4.0 },
         ],
       },
       acceptableAnswers: [
-        { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
-        { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+        { lessThanOrEqualTo: 1.2, greaterThanOrEqualTo: 1.1 },
+        { greaterThanOrEqualTo: 3.9, lessThanOrEqualTo: 4.0 },
         { in: [1, 2] },
       ],
       wrongAnswerImage: "b2_2forkertsvar.jpg",
     },
     c: {
+      wrongAnswerImage: "c_forkertsvar.jpg",
       image: "c_kuglelaas.jpg",
       coords: [180, 160, 230, 240],
       questions: [{ text: "Svar" }],
@@ -142,13 +143,29 @@ const config = {
       image: "d_bolte.jpg",
       wrongAnswerImage: "d_bolte_wrong.jpg",
       coords: [240, 400, 305, 480],
-      questions: [{ text: "h1: (h2=300-h1)" }],
+      questions: [
+        { text: "h1: (h2=300-h1)", enableWhen: [{ b2: { equalTo: 2 } }] },
+        { text: "h1: (h2=160-h1)", enableWhen: [{ b2: { equalTo: 1 } }] },
+      ],
       requiredAnswersToShowThisTask: [{ b2: { in: [1, 2] } }],
       imageIfNotRequiredAnswers: "d_bolte_hint.jpg",
-      acceptableAnswers: [{ lessThanOrEqualTo: 250, greaterThanOrEqualTo: 50 }],
+      conditionalAccaptableAnswersArray: [
+        {
+          enableWhen: [{ b2: { equalTo: 2 } }],
+          acceptableAnswersArray: [
+            { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 50 },
+          ],
+        },
+        {
+          enableWhen: [{ b2: { equalTo: 1 } }],
+          acceptableAnswersArray: [
+            { lessThanOrEqualTo: 130, greaterThanOrEqualTo: 30 },
+          ],
+        },
+      ],
     },
     f: {
-      enableWhen: [{ b2: { in: [1, 2] } }],
+      enableWhen: [{ b2: { equalTo: 2 }, d0: { greaterThan: 0 } }],
       image: "f_saddelhak.jpg",
       coords: [240, 240, 300, 300],
       questions: [{ text: "Svar" }],
@@ -202,8 +219,8 @@ const config = {
     },
     {
       answersRequired: {
-        b0: { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
-        b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+        b0: { lessThanOrEqualTo: 1.2, greaterThanOrEqualTo: 1.1 },
+        b1: { greaterThanOrEqualTo: 3.9, lessThanOrEqualTo: 4.0 },
         b2: { equalTo: 1 },
       },
       fileName: "b_lille_bjaelke.png",
@@ -211,8 +228,8 @@ const config = {
     },
     {
       answersRequired: {
-        b0: { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
-        b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+        b0: { lessThanOrEqualTo: 1.2, greaterThanOrEqualTo: 1.1 },
+        b1: { greaterThanOrEqualTo: 3.9, lessThanOrEqualTo: 4.0 },
         b2: { equalTo: 2 },
         d0: { notAnswered: true },
       },
@@ -221,8 +238,8 @@ const config = {
     },
     {
       answersRequired: {
-        b0: { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
-        b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+        b0: { lessThanOrEqualTo: 1.2, greaterThanOrEqualTo: 1.1 },
+        b1: { greaterThanOrEqualTo: 3.9, lessThanOrEqualTo: 4.0 },
         b2: { equalTo: 2 },
       },
       fileName: "b_stor_bjaelke_vaek.png",
@@ -230,8 +247,8 @@ const config = {
     },
     {
       answersRequired: {
-        b0: { lessThanOrEqualTo: 4, greaterThanOrEqualTo: 3.9 },
-        b1: { lessThanOrEqualTo: 1.1, greaterThanOrEqualTo: 1.1 },
+        b0: { lessThanOrEqualTo: 1.2, greaterThanOrEqualTo: 1.1 },
+        b1: { greaterThanOrEqualTo: 3.9, lessThanOrEqualTo: 4.0 },
         b2: { equalTo: 1 },
       },
       fileName: "b_lille_bjaelke_vaek.png",
@@ -240,7 +257,7 @@ const config = {
     {
       answersRequired: {
         b2: { equalTo: 1 },
-        d0: { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 150 },
+        d0: { lessThanOrEqualTo: 130, greaterThanOrEqualTo: 30 },
       },
       fileName: "d_bolt_i_lille.png",
       position: { left: "245px", top: "256px" },

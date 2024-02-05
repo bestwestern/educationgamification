@@ -34,7 +34,7 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    console.log({ route, currentTaskId });
+    //console.log({ route, currentTaskId });
   }, [route, currentTaskId]);
   const { tasks, rootImageFileName, dynamicImages } = config;
   const taskClick = (e, id) => {
@@ -90,19 +90,19 @@ export default () => {
   const hoveredTask = Object.entries(tasks).find(
     ([id, { coords, shape = "rect", enableWhen }]) => {
       if (
+        x > coords[0] &&
+        x < coords[2] &&
+        y > coords[1] &&
+        y < coords[3] &&
         !enableWhen?.find((requirementProperty) => {
           let missingAnswerFound = false;
           for (var answerProp in requirementProperty) {
-            const answer = Number(route[answerProp]);
+            const answer = route[answerProp] && Number(route[answerProp]);
             const valueOk = checkValue(answer, requirementProperty[answerProp]);
             if (!valueOk) missingAnswerFound = true;
           }
           return missingAnswerFound;
-        }) &&
-        x > coords[0] &&
-        x < coords[2] &&
-        y > coords[1] &&
-        y < coords[3]
+        })
       )
         return true;
     }
@@ -145,30 +145,28 @@ export default () => {
         style={{ position: "absolute", left: 0, top: "50px" }}
         src={rootImageFileName}
       ></img>
+      {console.log("-----") ||
+        dynamicImages.map((di, index) => {
+          const { answersRequired, fileName, position } = di;
 
-      {dynamicImages.map((di, index) => {
-        const { answersRequired, fileName, position } = di;
-        const hide = Object.keys(answersRequired).find((id) => {
-          const answer = route[id];
-          const requirement = answersRequired[id];
-          const valueOk = checkValue(answer, requirement);
-          // if (requirement.notAnswered) {
-          //   console.log({ valueOk });
-          // }
-          return !valueOk;
-        });
-        // console.log({ fileName, hide });
-        if (!hide) console.log(fileName);
-        return (
-          !hide && (
-            <img
-              key={fileName + index}
-              src={fileName}
-              style={{ position: "absolute", ...position }}
-            ></img>
-          )
-        );
-      })}
+          const hide = Object.keys(answersRequired).find((id) => {
+            const answer = route[id];
+            const requirement = answersRequired[id];
+            const valueOk = checkValue(answer, requirement);
+
+            return !valueOk;
+          });
+          if (!hide) console.log(fileName);
+          return (
+            !hide && (
+              <img
+                key={fileName + index}
+                src={fileName}
+                style={{ position: "absolute", ...position }}
+              ></img>
+            )
+          );
+        })}
       <button
         type="button"
         style={{ top: "650px" }}
@@ -176,10 +174,12 @@ export default () => {
         className="absolute left-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
       >
         Hjælp
-      </button>
-      <span style={{ top: "750px" }} className="absolute">
-        {"x:" + (mousePos.x || "..") + ", y:" + (mousePos.y || "...")}
-      </span>
+      </button>{" "}
+      {false && (
+        <span style={{ top: "750px" }} className="absolute">
+          {"x:" + (mousePos.x || "..") + ", y:" + (mousePos.y || "...")}
+        </span>
+      )}
     </div>
   );
 };
