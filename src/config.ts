@@ -7,7 +7,6 @@ const config = {
         { html: "<p>K<sub>MOD,P<o:p></o:p></sub></p>" },
         { html: "<p>K<sub>MOD,Ø<o:p></o:p></sub></p>" },
       ],
-      shape: "circle",
       coords: [62, 428, 160, 600],
       ht: "Y=x<sup>2",
       acceptableAnswers: [{ equalTo: 0.6 }, { equalTo: 1.1 }],
@@ -265,7 +264,7 @@ const config = {
     {
       answersRequired: {
         b2: { equalTo: 2 },
-        d0: { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 150 },
+        d0: { lessThanOrEqualTo: 250, greaterThanOrEqualTo: 50 },
         f0: { notAnswered: true },
       },
       fileName: "d_bolt_i_stor.png",
