@@ -43,7 +43,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
+            { d0: { greaterThanOrEqualTo: 151, lessThanOrEqualTo: 250 } },
             { f0: { greaterThanOrEqualTo: 4, lessThanOrEqualTo: 5 } },
           ],
           fileName: "finish.mov",
