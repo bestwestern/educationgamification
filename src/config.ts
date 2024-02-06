@@ -63,7 +63,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
+            { d0: { greaterThanOrEqualTo: 151, lessThanOrEqualTo: 250 } },
             { f0: { equalTo: 0 } },
           ],
           fileName: "video04_3.mov",
@@ -73,7 +73,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
+            { d0: { greaterThanOrEqualTo: 151, lessThanOrEqualTo: 250 } },
             { f0: { lessThan: 4 } },
           ],
           fileName: "video04_1.mov",
@@ -83,7 +83,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
+            { d0: { greaterThanOrEqualTo: 151, lessThanOrEqualTo: 250 } },
             { f0: { greaterThan: 5 } },
           ],
           fileName: "video04_1.mov",
