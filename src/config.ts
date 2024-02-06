@@ -53,6 +53,16 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
+            { d0: { lessThan: 151 } },
+            { f0: { greaterThanOrEqualTo: 4, lessThanOrEqualTo: 5 } },
+          ],
+          fileName: "video04_2.mov",
+          answersRequired: [{ equalTo: 5.892 }],
+        },
+        {
+          enableWhen: [
+            { b2: { equalTo: 2 } },
+            { a0: { equalTo: 0.6 } },
             { d0: { greaterThan: 150, lessThanOrEqualTo: 250 } },
             { f0: { equalTo: 0 } },
           ],
