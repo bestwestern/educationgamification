@@ -114,13 +114,13 @@ const config = {
           answersRequired: [{ equalTo: 5.892 }],
         },
         {
-          enableWhen: [{ b2: { equalTo: 1 } }, { a0: { equalTo: 0.6 } }],
-          fileName: "video02_3.mov",
+          enableWhen: [{ b2: { equalTo: 2 } }],
+          fileName: "video02.mov",
           answersRequired: [{ equalTo: 5.892 }],
         },
         {
-          enableWhen: [{ b2: { equalTo: 2 } }],
-          fileName: "video02.mov",
+          enableWhen: [{ b2: { equalTo: 1 } }, { a0: { equalTo: 0.6 } }],
+          fileName: "video02_3.mov",
           answersRequired: [{ equalTo: 5.892 }],
         },
         {

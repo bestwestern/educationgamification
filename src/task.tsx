@@ -91,7 +91,7 @@ export default (props) => {
               console.log({ requirementProperty });
               let missingAnswerFound = false;
               for (var answerProp in requirementProperty) {
-                const answer = Number(route[answerProp]);
+                const answer = route[answerProp];
                 const valueOk = checkValue(
                   answer,
                   requirementProperty[answerProp]

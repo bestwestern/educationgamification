@@ -34,7 +34,7 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    //console.log({ route, currentTaskId });
+    console.log({ route, currentTaskId });
   }, [route, currentTaskId]);
   const { tasks, rootImageFileName, dynamicImages } = config;
   const taskClick = (e, id) => {
@@ -145,7 +145,8 @@ export default () => {
         style={{ position: "absolute", left: 0, top: "50px" }}
         src={rootImageFileName}
       ></img>
-      {console.log("-----") ||
+      {
+        /*console.log("-----") ||*/
         dynamicImages.map((di, index) => {
           const { answersRequired, fileName, position } = di;
 
@@ -156,7 +157,7 @@ export default () => {
 
             return !valueOk;
           });
-          if (!hide) console.log(fileName);
+          // if (!hide) console.log(fileName);
           return (
             !hide && (
               <img
@@ -166,7 +167,8 @@ export default () => {
               ></img>
             )
           );
-        })}
+        })
+      }
       <button
         type="button"
         style={{ top: "650px" }}
@@ -175,6 +177,19 @@ export default () => {
       >
         Hjælp
       </button>{" "}
+      {Object.entries(route).length > 0 && (
+        <button
+          type="button"
+          style={{ top: "650px", left: "100px" }}
+          onClick={() => {
+            setRoute({});
+            history.pushState(null, "", location.origin);
+          }}
+          className="absolute left-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        >
+          Start forfra
+        </button>
+      )}
       {false && (
         <span style={{ top: "750px" }} className="absolute">
           {"x:" + (mousePos.x || "..") + ", y:" + (mousePos.y || "...")}
