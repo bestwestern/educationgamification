@@ -14,7 +14,8 @@ const config = {
     },
     b: {
       image: "b1_bjaelke.jpg",
-      questions: [{ text: "Bjælke 1" }, { text: "Bjælke 2" }],
+   
+      questions: [{ text: "Bjælke 1 Enhed = [kN]" }, { text: "Bjælke 2 Enhed = [kN]" }],
       coords: [317, 530, 780, 600],
       secondImage: {
         fileName: "b2_bjaelke.jpg",
@@ -153,8 +154,8 @@ const config = {
       wrongAnswerImage: "d_bolte_wrong.jpg",
       coords: [240, 400, 305, 480],
       questions: [
-        { text: "h1: (h2=300-h1)", enableWhen: [{ b2: { equalTo: 2 } }] },
-        { text: "h1: (h2=160-h1)", enableWhen: [{ b2: { equalTo: 1 } }] },
+        { text: "h1: Enhed = [mm] (h2=300-h1)", enableWhen: [{ b2: { equalTo: 2 } }] },
+        { text: "h1: Enhed = [mm] (h2=160-h1)", enableWhen: [{ b2: { equalTo: 1 } }] },
       ],
       requiredAnswersToShowThisTask: [{ b2: { in: [1, 2] } }],
       imageIfNotRequiredAnswers: "d_bolte_hint.jpg",
@@ -175,6 +176,7 @@ const config = {
     },
     f: {
       enableWhen: [{ b2: { equalTo: 2 }, d0: { greaterThan: 0 } }],
+      helpImages: ["help_b_1.jpg","help_b_2.jpg"],
       image: "f_saddelhak.jpg",
       coords: [240, 240, 300, 300],
       questions: [{ text: "Svar" }],

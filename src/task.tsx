@@ -1,7 +1,18 @@
 import { useState, useEffect } from "react";
 import { checkValue } from "./utils";
+import help from "./help";
 export default (props) => {
-  const { currentTaskId, config, route, setRoute, setCurrentTaskId } = props;
+  const {
+    currentTaskId,
+    config,
+    route,
+    setRoute,
+    setCurrentTaskId,
+    setHelpImage,
+    taskHelpStatus,
+    setTaskHelpStatus,
+  } = props;
+  console.log(taskHelpStatus);
   const not_num_period = new RegExp("[^0-9.]");
   useEffect(() => {}, []);
   const [answers, setAnswers] = useState([]);
@@ -19,6 +30,7 @@ export default (props) => {
     imageIfNotRequiredAnswers,
     wrongAnswerImage,
     afterAnswerPictures,
+    helpImages = [],
   } = currentTask;
   const answerChange = (e, index) => {
     const newAnswer = e.target.value
@@ -30,7 +42,21 @@ export default (props) => {
     setAnswers(newAnswers);
   };
   const closeClick = () => {
+    setTaskHelpStatus({
+      ...taskHelpStatus,
+      [currentTaskId]: 0,
+    });
     setCurrentTaskId(null);
+  };
+  const helpClick = (e) => {
+    const currentImageIndex = taskHelpStatus[currentTaskId] || 0;
+    setHelpImage(helpImages[currentImageIndex]);
+    if (currentImageIndex < helpImages.length - 1) {
+      setTaskHelpStatus({
+        ...taskHelpStatus,
+        [currentTaskId]: currentImageIndex + 1,
+      });
+    }
   };
   const answerClick = () => {
     const r = { ...route };
@@ -236,13 +262,15 @@ export default (props) => {
     !answeredWrong && (!requiredAnswersToShowThisTask || !answerMissingToShow);
   return (
     <div className="flex justify-center">
-      <button
-        type="button"
-        onClick={closeClick}
-        className="absolute left-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-      >
-        Hjælp
-      </button>
+      {helpImages.length > 0 && (
+        <button
+          type="button"
+          onClick={helpClick}
+          className="absolute left-0 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        >
+          Hjælp
+        </button>
+      )}
       <div className="sm:w-1 md:w-1/2 ">
         <div className="relative">
           <button
