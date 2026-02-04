@@ -44,7 +44,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { greaterThanOrEqualTo: 151, lessThanOrEqualTo: 250 } },
+            { d0: { greaterThanOrEqualTo: 242, lessThanOrEqualTo: 250 } },
             { f0: { greaterThanOrEqualTo: 4, lessThanOrEqualTo: 5 } },
           ],
           fileName: "finish.mov",
@@ -54,7 +54,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { lessThan: 151 } },
+            { d0: { lessThan: 242 } },
             { f0: { greaterThanOrEqualTo: 4, lessThanOrEqualTo: 5 } },
           ],
           fileName: "video04_2.mov",
@@ -64,7 +64,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { greaterThanOrEqualTo: 151, lessThanOrEqualTo: 250 } },
+            { d0: { greaterThanOrEqualTo: 242, lessThanOrEqualTo: 250 } },
             { f0: { equalTo: 0 } },
           ],
           fileName: "video04_3.mov",
@@ -74,7 +74,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { greaterThanOrEqualTo: 151, lessThanOrEqualTo: 250 } },
+            { d0: { greaterThanOrEqualTo: 242, lessThanOrEqualTo: 250 } },
             { f0: { lessThan: 4 } },
           ],
           fileName: "video04_1.mov",
@@ -84,7 +84,7 @@ const config = {
           enableWhen: [
             { b2: { equalTo: 2 } },
             { a0: { equalTo: 0.6 } },
-            { d0: { greaterThanOrEqualTo: 151, lessThanOrEqualTo: 250 } },
+            { d0: { greaterThanOrEqualTo: 242, lessThanOrEqualTo: 250 } },
             { f0: { greaterThan: 5 } },
           ],
           fileName: "video04_1.mov",
@@ -169,7 +169,7 @@ const config = {
         {
           enableWhen: [{ b2: { equalTo: 1 } }],
           acceptableAnswersArray: [
-            { lessThanOrEqualTo: 130, greaterThanOrEqualTo: 30 },
+            { lessThanOrEqualTo: 150, greaterThanOrEqualTo: 30 },
           ],
         },
       ],
@@ -268,7 +268,7 @@ const config = {
     {
       answersRequired: {
         b2: { equalTo: 1 },
-        d0: { lessThanOrEqualTo: 130, greaterThanOrEqualTo: 30 },
+        d0: { lessThanOrEqualTo: 150, greaterThanOrEqualTo: 30 },
       },
       fileName: "d_bolt_i_lille.png",
       position: { left: "245px", top: "256px" },
